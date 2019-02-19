@@ -1,0 +1,17 @@
+version: "3.1"
+services:
+
+  auth-service:
+    build: ./auth-service
+    image: agende/auth-service
+    container_name: auth-service
+
+  customer-service:
+    build: ./customer-service
+    image: agende/customer-service
+    container_name: customer-service
+
+  scheduler-service:
+    build: ./scheduler-service
+    image: agende/scheduler-service
+    container_name: scheduler-service
