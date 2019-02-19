@@ -4,3 +4,6 @@
 [submodule "customer-service"]
 	path = customer-service
 	url = ../customer-service
+[submodule "scheduler-service"]
+	path = scheduler-service
+	url = ../scheduler-service
