@@ -1,0 +1,4 @@
+[submodule "svc-stock-manager"]
+	path = svc-stock-manager
+	url = https://github.com/evestidor/svc-stock-manager
+	branch = master
