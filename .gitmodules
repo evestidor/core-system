@@ -2,3 +2,7 @@
 	path = svc-stock-manager
 	url = https://github.com/evestidor/svc-stock-manager
 	branch = master
+[submodule "ui"]
+	path = ui
+	url = https://github.com/evestidor/ui
+	branch = master
