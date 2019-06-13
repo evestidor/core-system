@@ -1,0 +1,10 @@
+#!/bin/bash
+set -e
+
+cd ui && git checkout master && git pull origin master
+cd api-gateway && git checkout master && git pull origin master
+cd svc-stock-manager && git checkout master && git pull origin master
+
+./ui/config/build-image
+./api-gateway/config/build-image
+./svc-stock-manager/config/build-image

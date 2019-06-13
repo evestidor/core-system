@@ -1,12 +1,12 @@
 [submodule "svc-stock-manager"]
 	path = svc-stock-manager
-	url = https://github.com/evestidor/svc-stock-manager
+	url = git@github.com:evestidor/svc-stock-manager.git
 	branch = master
 [submodule "ui"]
 	path = ui
-	url = https://github.com/evestidor/ui
+	url = git@github.com:evestidor/ui.git
 	branch = master
 [submodule "api-gateway"]
 	path = api-gateway
-	url = https://github.com/evestidor/api-gateway
+	url = git@github.com:evestidor/api-gateway.git
 	branch = master

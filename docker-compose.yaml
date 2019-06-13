@@ -1,0 +1,34 @@
+version: '3.6'
+
+networks:
+  default: { name: carta }
+
+services:
+
+  evestidor-ui:
+    image: evestidor/ui:local
+    build: ./ui
+    restart: unless-stopped
+    container_name: ui
+    ports:
+      - 8000:8000
+    volumes:
+      - ./ui:/app:rw,cached
+
+  evestidor-api-gateway:
+    image: evestidor/api-gateway:local
+    build: ./api-gateway
+    restart: unless-stopped
+    container_name: api-gateway
+    ports:
+      - 8001:8000
+    volumes:
+      - ./api-gateway:/app:rw,cached
+
+  evestidor-svc-stock-manager:
+    image: evestidor/svc-stock-manager:local
+    build: ./svc-stock-manager
+    restart: unless-stopped
+    container_name: svc-stock-manager
+    volumes:
+      - ./svc-stock-manager:/app:rw,cached
