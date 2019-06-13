@@ -6,3 +6,7 @@
 	path = ui
 	url = https://github.com/evestidor/ui
 	branch = master
+[submodule "api-gateway"]
+	path = api-gateway
+	url = https://github.com/evestidor/api-gateway
+	branch = master
