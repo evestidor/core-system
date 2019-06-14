@@ -1,0 +1,29 @@
+#!/bin/bash
+set -e
+
+function getLatestCode() {
+    git checkout master
+    git pull origin master
+}
+
+function buildImage() {
+    config/build-image
+}
+
+echo "Building UI image"
+cd ui
+getLatestCode
+buildImage
+cd ..
+
+echo "Building API Gateway image"
+cd api-gateway
+getLatestCode
+buildImage
+cd ..
+
+echo "Building Stock manager image"
+cd svc-stock-manager
+getLatestCode
+buildImage
+cd ..

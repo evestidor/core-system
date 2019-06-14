@@ -1,0 +1,29 @@
+#!/bin/bash
+set -e
+
+function getLatestCode() {
+    git checkout master
+    git pull origin master
+}
+
+function pushImage() {
+    config/push-image
+}
+
+echo "Pushing UI image"
+cd ui
+getLatestCode
+pushImage
+cd ..
+
+echo "Pushing API Gateway image"
+cd api-gateway
+getLatestCode
+pushImage
+cd ..
+
+echo "Pushing Stock manager image"
+cd svc-stock-manager
+getLatestCode
+pushImage
+cd ..
