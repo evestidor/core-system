@@ -11,13 +11,13 @@ function pushImage() {
 }
 
 echo "Pushing UI image"
-cd ui
+cd core-ui
 getLatestCode
 pushImage
 cd ..
 
 echo "Pushing API Gateway image"
-cd api-gateway
+cd core-api-gateway
 getLatestCode
 pushImage
 cd ..

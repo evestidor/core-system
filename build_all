@@ -11,13 +11,13 @@ function buildImage() {
 }
 
 echo "Building UI image"
-cd ui
+cd core-ui
 getLatestCode
 buildImage
 cd ..
 
 echo "Building API Gateway image"
-cd api-gateway
+cd core-api-gateway
 getLatestCode
 buildImage
 cd ..

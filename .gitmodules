@@ -1,14 +1,14 @@
-[submodule "api-gateway"]
-	path = api-gateway
-	url = git@github.com:evestidor/api-gateway.git
+[submodule "core-ui"]
+	path = core-ui
+	url = git@github.com:evestidor/core-ui.git
 	branch = master
-[submodule "ui"]
-	path = ui
-	url = git@github.com:evestidor/ui.git
+[submodule "core-api-gateway"]
+	path = core-api-gateway
+	url = git@github.com:evestidor/core-api-gateway.git
 	branch = master
-[submodule "event-stream"]
-	path = event-stream
-	url = git@github.com:evestidor/event-stream.git
+[submodule "core-event-stream"]
+	path = core-event-stream
+	url = git@github.com:evestidor/core-event-stream.git
 	branch = master
 [submodule "svc-stock-manager"]
 	path = svc-stock-manager

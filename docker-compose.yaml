@@ -17,13 +17,13 @@ services:
 
   evestidor-api-gateway:
     image: evestidor/api-gateway:local
-    build: ./api-gateway
+    build: ./core-api-gateway
     restart: unless-stopped
     container_name: api-gateway
     ports:
       - 8001:8000
     volumes:
-      - ./api-gateway:/app:rw,cached
+      - ./core-api-gateway:/app:rw,cached
 
   evestidor-event-stream:
     image: evestidor/event-stream:local
