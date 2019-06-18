@@ -25,6 +25,20 @@ services:
     volumes:
       - ./api-gateway:/app:rw,cached
 
+  evestidor-event-stream:
+    image: evestidor/event-stream:local
+    build: ./event-stream
+    restart: unless-stopped
+    container_name: event-stream
+    environment:
+      RABBITMQ_ERLANG_COOKIE: "SWQOKODSQALRPCLNMEQG"
+      RABBITMQ_DEFAULT_USER: "guest"
+      RABBITMQ_DEFAULT_PASS: "guest"
+      RABBITMQ_DEFAULT_VHOST: "/"
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
   evestidor-svc-stock-manager:
     image: evestidor/svc-stock-manager:local
     build: ./svc-stock-manager
@@ -32,3 +46,19 @@ services:
     container_name: svc-stock-manager
     volumes:
       - ./svc-stock-manager:/app:rw,cached
+
+  evestidor-svc-stock-prices:
+    image: evestidor/svc-stock-prices:local
+    build: ./svc-stock-prices
+    restart: unless-stopped
+    container_name: svc-stock-prices
+    volumes:
+      - ./svc-stock-prices:/app:rw,cached
+
+  evestidor-svc-stock-prices-tracker:
+    image: evestidor/svc-stock-prices-tracker:local
+    build: ./svc-stock-prices-tracker
+    restart: unless-stopped
+    container_name: svc-stock-prices-tracker
+    volumes:
+      - ./svc-stock-prices-tracker:/app:rw,cached
