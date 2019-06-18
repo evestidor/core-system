@@ -6,6 +6,10 @@
 	path = ui
 	url = git@github.com:evestidor/ui.git
 	branch = master
+[submodule "event-stream"]
+	path = event-stream
+	url = git@github.com:evestidor/event-stream.git
+	branch = master
 [submodule "svc-stock-manager"]
 	path = svc-stock-manager
 	url = git@github.com:evestidor/svc-stock-manager.git
