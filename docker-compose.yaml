@@ -35,6 +35,7 @@ services:
       RABBITMQ_DEFAULT_USER: "guest"
       RABBITMQ_DEFAULT_PASS: "guest"
       RABBITMQ_DEFAULT_VHOST: "/"
+      RABBITMQ_SERVER_ADDITIONAL_ERL_ARGS: "-rabbit log_levels [{connection,error}]"
     ports:
       - "5672:5672"
       - "15672:15672"
@@ -52,6 +53,17 @@ services:
     build: ./svc-stock-prices
     restart: unless-stopped
     container_name: svc-stock-prices
+    ports:
+      - "8003:8000"
+    volumes:
+      - ./svc-stock-prices:/app:rw,cached
+
+  evestidor-svc-stock-prices-consumer:
+    image: evestidor/svc-stock-prices:local
+    build: ./svc-stock-prices
+    command: python manage.py consume_prices
+    restart: unless-stopped
+    container_name: svc-stock-prices-consumer
     volumes:
       - ./svc-stock-prices:/app:rw,cached
 
