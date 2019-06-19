@@ -7,13 +7,13 @@ services:
 
   evestidor-ui:
     image: evestidor/ui:local
-    build: ./ui
+    build: ./core-ui
     restart: unless-stopped
     container_name: ui
     ports:
       - 8000:8000
     volumes:
-      - ./ui:/app:rw,cached
+      - ./core-ui:/app:rw,cached
 
   evestidor-api-gateway:
     image: evestidor/api-gateway:local
@@ -27,7 +27,7 @@ services:
 
   evestidor-event-stream:
     image: evestidor/event-stream:local
-    build: ./event-stream
+    build: ./core-event-stream
     restart: unless-stopped
     container_name: event-stream
     environment:
@@ -45,6 +45,15 @@ services:
     build: ./svc-stock-manager
     restart: unless-stopped
     container_name: svc-stock-manager
+    volumes:
+      - ./svc-stock-manager:/app:rw,cached
+
+  evestidor-svc-stock-manager-consumer:
+    image: evestidor/svc-stock-manager:local
+    build: ./svc-stock-manager
+    command: python manage.py consume_prices
+    restart: unless-stopped
+    container_name: svc-stock-manager-consumer
     volumes:
       - ./svc-stock-manager:/app:rw,cached
 
