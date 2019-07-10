@@ -1,29 +1,46 @@
 version: '3.6'
 
 networks:
-  default: { name: carta }
+  default: { name: evestidor }
 
 services:
+
+  lighttpd:
+    image: gists/lighttpd:1.4.52
+    volumes:
+      - ./conf/:/etc/lighttpd:ro
+    ports:
+      - 8000:8000
 
   evestidor-ui:
     image: evestidor/ui:local
     build: ./core-ui
     restart: unless-stopped
     container_name: ui
-    ports:
-      - 8000:8000
     volumes:
       - ./core-ui:/app:rw,cached
+    environment:
+      ALLOWED_HOSTS: '*'
+      DATABASE_URL: sqlite:///local.db
+      DEBUG: "true"
+      ENVIRONMENT: sandbox
+      SECRET_KEY: secret1
+      USE_WHITENOISE: "true"
+      API_GATEWAY_URL: http://0.0.0.0:8000/api
 
   evestidor-api-gateway:
     image: evestidor/api-gateway:local
     build: ./core-api-gateway
     restart: unless-stopped
     container_name: api-gateway
-    ports:
-      - 8001:8000
     volumes:
       - ./core-api-gateway:/app:rw,cached
+    environment:
+      ALLOWED_HOSTS: '*'
+      DEBUG: "true"
+      ENVIRONMENT: sandbox
+      SECRET_KEY: secret1
+      STOCK_MANAGER_URL: http://evestidor-stock-manager:8000
 
   evestidor-event-stream:
     image: evestidor/event-stream:local
@@ -40,46 +57,37 @@ services:
       - "5672:5672"
       - "15672:15672"
 
-  evestidor-svc-stock-manager:
-    image: evestidor/svc-stock-manager:local
+  evestidor-stock-manager:
+    image: evestidor/stock-manager:master
     build: ./svc-stock-manager
     restart: unless-stopped
-    container_name: svc-stock-manager
+    container_name: stock-manager
     volumes:
       - ./svc-stock-manager:/app:rw,cached
+    environment:
+      ALLOWED_HOSTS: '*'
+      DEBUG: "true"
+      ENVIRONMENT: sandbox
+      SECRET_KEY: secret1
 
-  evestidor-svc-stock-manager-consumer:
-    image: evestidor/svc-stock-manager:local
+  evestidor-stock-manager-consumer:
+    image: evestidor/stock-manager:local
     build: ./svc-stock-manager
     command: python manage.py consume_prices
     restart: unless-stopped
-    container_name: svc-stock-manager-consumer
+    container_name: stock-manager-consumer
     volumes:
       - ./svc-stock-manager:/app:rw,cached
+    environment:
+      ALLOWED_HOSTS: '*'
+      DEBUG: "true"
+      ENVIRONMENT: sandbox
+      SECRET_KEY: secret1
 
-  evestidor-svc-stock-prices:
-    image: evestidor/svc-stock-prices:local
-    build: ./svc-stock-prices
+  evestidor-svc-stock-price-simulator:
+    image: evestidor/stock-price-simulator:local
+    build: ./svc-stock-price-simulator
     restart: unless-stopped
-    container_name: svc-stock-prices
-    ports:
-      - "8003:8000"
+    container_name: stock-price-simulator
     volumes:
-      - ./svc-stock-prices:/app:rw,cached
-
-  evestidor-svc-stock-prices-consumer:
-    image: evestidor/svc-stock-prices:local
-    build: ./svc-stock-prices
-    command: python manage.py consume_prices
-    restart: unless-stopped
-    container_name: svc-stock-prices-consumer
-    volumes:
-      - ./svc-stock-prices:/app:rw,cached
-
-  evestidor-svc-stock-prices-tracker:
-    image: evestidor/svc-stock-prices-tracker:local
-    build: ./svc-stock-prices-tracker
-    restart: unless-stopped
-    container_name: svc-stock-prices-tracker
-    volumes:
-      - ./svc-stock-prices-tracker:/app:rw,cached
+      - ./svc-stock-price-simulator:/app:rw,cached
