@@ -1,0 +1,37 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "core-api-gateway"
+		},
+		{
+			"path": "core-event-stream"
+		},
+		{
+			"path": "core-ui"
+		},
+		{
+			"path": "svc-stock-manager"
+		},
+		{
+			"path": "svc-stock-price-simulator"
+		}
+	],
+	"settings": {
+		"editor.formatOnSave": true,
+		"python.formatting.provider": "black",
+		"python.formatting.blackArgs": [
+			"-S"
+		],
+		"python.linting.flake8Args": [
+			"--max-line-length=88"
+		],
+		"python.linting.flake8Enabled": true,
+		"python.linting.pylintEnabled": false,
+		"editor.codeActionsOnSave": {
+			"source.organizeImports": true
+		}
+	}
+}
