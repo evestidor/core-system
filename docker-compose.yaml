@@ -8,7 +8,7 @@ services:
   lighttpd:
     image: gists/lighttpd:1.4.52
     volumes:
-      - ./conf/:/etc/lighttpd:ro
+      - .config/:/etc/lighttpd:ro
     ports:
       - 8000:8000
 
@@ -36,10 +36,6 @@ services:
     volumes:
       - ./core-api-gateway:/app:rw,cached
     environment:
-      ALLOWED_HOSTS: '*'
-      DEBUG: "true"
-      ENVIRONMENT: sandbox
-      SECRET_KEY: secret1
       STOCK_MANAGER_URL: http://evestidor-stock-manager:8000
 
   evestidor-event-stream:
