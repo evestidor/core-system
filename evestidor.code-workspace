@@ -17,6 +17,9 @@
 		},
 		{
 			"path": "svc-stock-price-simulator"
+		},
+		{
+			"path": "svc-stock-prices"
 		}
 	],
 	"settings": {

@@ -20,13 +20,8 @@ services:
     volumes:
       - ./core-ui:/app:rw,cached
     environment:
-      ALLOWED_HOSTS: '*'
-      DATABASE_URL: sqlite:///local.db
-      DEBUG: "true"
-      ENVIRONMENT: sandbox
-      SECRET_KEY: secret1
-      USE_WHITENOISE: "true"
-      API_GATEWAY_URL: http://0.0.0.0:8000/api
+      DEBUG: 'true'
+      API_GATEWAY_URL: /api
 
   evestidor-api-gateway:
     image: evestidor/api-gateway:local
@@ -36,25 +31,11 @@ services:
     volumes:
       - ./core-api-gateway:/app:rw,cached
     environment:
+      DEBUG: 'true'
       STOCK_MANAGER_URL: http://evestidor-stock-manager:8000
 
-  evestidor-event-stream:
-    image: evestidor/event-stream:local
-    build: ./core-event-stream
-    restart: unless-stopped
-    container_name: event-stream
-    environment:
-      RABBITMQ_ERLANG_COOKIE: "SWQOKODSQALRPCLNMEQG"
-      RABBITMQ_DEFAULT_USER: "guest"
-      RABBITMQ_DEFAULT_PASS: "guest"
-      RABBITMQ_DEFAULT_VHOST: "/"
-      RABBITMQ_SERVER_ADDITIONAL_ERL_ARGS: "-rabbit log_levels [{connection,error}]"
-    ports:
-      - "5672:5672"
-      - "15672:15672"
-
   evestidor-stock-manager:
-    image: evestidor/stock-manager:master
+    image: evestidor/stock-manager:local
     build: ./svc-stock-manager
     restart: unless-stopped
     container_name: stock-manager
@@ -66,24 +47,39 @@ services:
       ENVIRONMENT: sandbox
       SECRET_KEY: secret1
 
-  evestidor-stock-manager-consumer:
-    image: evestidor/stock-manager:local
-    build: ./svc-stock-manager
-    command: python manage.py consume_prices
-    restart: unless-stopped
-    container_name: stock-manager-consumer
-    volumes:
-      - ./svc-stock-manager:/app:rw,cached
-    environment:
-      ALLOWED_HOSTS: '*'
-      DEBUG: "true"
-      ENVIRONMENT: sandbox
-      SECRET_KEY: secret1
+  # evestidor-event-stream:
+  #   image: evestidor/event-stream:local
+  #   build: ./core-event-stream
+  #   restart: unless-stopped
+  #   container_name: event-stream
+  #   environment:
+  #     RABBITMQ_ERLANG_COOKIE: "SWQOKODSQALRPCLNMEQG"
+  #     RABBITMQ_DEFAULT_USER: "guest"
+  #     RABBITMQ_DEFAULT_PASS: "guest"
+  #     RABBITMQ_DEFAULT_VHOST: "/"
+  #     RABBITMQ_SERVER_ADDITIONAL_ERL_ARGS: "-rabbit log_levels [{connection,error}]"
+  #   ports:
+  #     - "5672:5672"
+  #     - "15672:15672"
 
-  evestidor-svc-stock-price-simulator:
-    image: evestidor/stock-price-simulator:local
-    build: ./svc-stock-price-simulator
-    restart: unless-stopped
-    container_name: stock-price-simulator
-    volumes:
-      - ./svc-stock-price-simulator:/app:rw,cached
+  # evestidor-stock-manager-consumer:
+  #   image: evestidor/stock-manager:local
+  #   build: ./svc-stock-manager
+  #   command: python manage.py consume_prices
+  #   restart: unless-stopped
+  #   container_name: stock-manager-consumer
+  #   volumes:
+  #     - ./svc-stock-manager:/app:rw,cached
+  #   environment:
+  #     ALLOWED_HOSTS: '*'
+  #     DEBUG: "true"
+  #     ENVIRONMENT: sandbox
+  #     SECRET_KEY: secret1
+
+  # evestidor-svc-stock-price-simulator:
+  #   image: evestidor/stock-price-simulator:local
+  #   build: ./svc-stock-price-simulator
+  #   restart: unless-stopped
+  #   container_name: stock-price-simulator
+  #   volumes:
+  #     - ./svc-stock-price-simulator:/app:rw,cached

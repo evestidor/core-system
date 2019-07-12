@@ -18,3 +18,6 @@
 	path = svc-stock-price-simulator
 	url = git@github.com:evestidor/svc-stock-price-simulator.git
 	branch = master
+[submodule "svc-stock-prices"]
+	path = svc-stock-prices
+	url = git@github.com:evestidor/stock-prices.git
